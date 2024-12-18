@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>农场奶牛检测</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #info {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">农场奶牛检测</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-body">
+                        <img id="video" src="{{ url_for('video_feed') }}" class="img-fluid" alt="Video Stream">
+                    </div>
+                </div>
+                <div id="info" class="mt-3 card">
+                    <div class="card-header">
+                        <p>检测结果</p>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group" id="infoList"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function fetchClassCounts() {
+            fetch('/class_counts')
+                .then(response => response.json())
+                .then(data => {
+                    const infoList = document.getElementById('infoList');
+                    infoList.innerHTML = '';
+                    for (const [key, value] of Object.entries(data)) {
+                        const li = document.createElement('li');
+                        li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                        li.innerHTML = `<span>${key}</span><span class="badge badge-primary badge-pill">${value}</span>`;
+                        infoList.appendChild(li);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        setInterval(fetchClassCounts, 1000);
+    </script>
+</body>
+
+</html>
