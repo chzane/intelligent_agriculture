@@ -1,6 +1,6 @@
-train: /Volumes/Zane/智慧农业/datasets/images
-val: /Volumes/Zane/智慧农业/datasets/images
-test: /Volumes/Zane/智慧农业/datasets/images
+train: /Volumes/Zane/智慧农业/datasets/train/images
+val: /Volumes/Zane/智慧农业/datasets/val/images
+test: /Volumes/Zane/智慧农业/datasets/test/images
 nc: 1
 
 names: ['MilkCow']
